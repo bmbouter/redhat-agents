@@ -5,7 +5,7 @@ description: Configure Atlassian Jira MCP tools — walks the user through API t
 
 ## When to Use
 
-Run this before using any Product Owner agents. Required once per machine.
+Run this before using any agents that interact with Jira. Required once per machine.
 
 ## Instructions
 

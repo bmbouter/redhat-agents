@@ -5,7 +5,7 @@ description: Interview the user about their Jira workflow and generate a local j
 
 ## When to Use
 
-Run this after `/jira-setup` and before using any Product Owner agents. Re-run whenever the team's Jira process changes.
+Run this after `/jira-setup` and before using any Jira-connected agents. Re-run whenever the team's Jira process changes.
 
 ## Instructions
 

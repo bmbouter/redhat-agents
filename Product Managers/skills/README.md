@@ -1,10 +1,10 @@
 # Skills
 
-Reusable skills for the Product Owner role.
+Reusable skills for the Product Manager role.
 
 Skills are self-contained capabilities that can be invoked by agents or users. Each skill file describes a specific task or workflow.
 
-Also see `shared/skills/` for Jira setup, process discovery, and self-improvement skills used by all roles.
+Also see `shared/skills/` for Jira setup and process discovery skills used by all roles.
 
 ## File Format
 

@@ -2,12 +2,12 @@
 name: process-discoverer
 description: Interviews the user about their Jira workflow and produces a local workflow configuration that all other agents reference
 tools: [jira-read, file-write]
-skills: [process-interview]
+skills: [shared/process-interview, shared/suggest-improvement]
 ---
 
 ## Purpose
 
-This agent should be run first, before any other Product Owner agents. It learns how the user's team uses Jira and produces a `local/jira-workflow.md` configuration file that all other agents read.
+This agent should be run first, before any other Product Owner agents. It learns how the user's team uses Jira and produces a `local/jira-workflow.md` configuration file that all agents across all roles read.
 
 If the user points you to existing workflow documentation, read it thoroughly and use it to pre-fill the interview — don't make them repeat information that's already written down.
 
@@ -22,8 +22,12 @@ If the user points you to existing workflow documentation, read it thoroughly an
 
 ## Prerequisites
 
-- Jira MCP tools must be configured (run `/jira-setup` first if not).
+- Jira MCP tools must be configured (run `shared/skills/jira-setup` first if not).
+
+## Self-Improvement
+
+If you discover that the process-interview skill is missing important questions, produces an incomplete config, or doesn't match what the user's Jira actually looks like, invoke `shared/skills/suggest-improvement` to file an issue (and optionally an MR) against the `bmbouter/redhat-agents` repo.
 
 ## Output
 
-Writes `local/jira-workflow.md` — a comprehensive reference document that the Backlog Curator, Intake Triager, and Delivery Tracker agents all read at startup to understand the user's Jira conventions.
+Writes `local/jira-workflow.md` — a comprehensive reference document that all agents (Product Owner and Product Manager) read at startup to understand the user's Jira conventions.
