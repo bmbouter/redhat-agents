@@ -6,33 +6,57 @@ Every agent learns your team's specific Jira setup (project key, statuses, field
 
 ## Quick Start
 
-### Install with [Lola](https://github.com/RedHatProductSecurity/lola)
+### Clone and use directly
 
-**Option 1 — Direct install:**
+Clone the repo and point your AI assistant at it:
+
 ```bash
-lola mod add https://gitlab.cee.redhat.com/bmbouter/redhat-agents.git
-lola install redhat-agents -a claude-code
+git clone git@gitlab.cee.redhat.com:bmbouter/redhat-agents.git
 ```
 
-**Option 2 — Register the marketplace first:**
+**Claude Code** — copy the skills and agents into your project:
+```bash
+cp -r redhat-agents/module/skills/ .claude/skills/
+cp -r redhat-agents/module/agents/ .claude/agents/
+cp -r redhat-agents/module/commands/ .claude/commands/
+```
+
+**Cursor** — same idea, different target:
+```bash
+cp -r redhat-agents/module/skills/ .cursor/skills/
+cp -r redhat-agents/module/agents/ .cursor/agents/
+cp -r redhat-agents/module/commands/ .cursor/commands/
+```
+
+Or just open the repo directly in your AI tool and reference the skills and agents from there.
+
+### Install with [Lola](https://github.com/RedHatProductSecurity/lola) (optional)
+
+If you use Lola, it handles the file placement automatically for any supported assistant:
+
+```bash
+lola mod add https://gitlab.cee.redhat.com/bmbouter/redhat-agents.git
+lola install redhat-agents -a claude-code    # or cursor, gemini-cli, opencode
+```
+
+Or register the marketplace for easier discovery:
 ```bash
 lola market add rh-agents https://gitlab.cee.redhat.com/bmbouter/redhat-agents/-/raw/main/marketplace.yml
 lola install redhat-agents -a claude-code
 ```
 
-**Option 3 — Declarative (add to your project's `.lola-req`):**
+Or add to your project's `.lola-req` for declarative team setup:
 ```
 https://gitlab.cee.redhat.com/bmbouter/redhat-agents.git@main
 ```
-Then run `lola sync`.
 
 ### First-Time Setup
 
 After installation, run two setup commands:
 
 ```
-/redhat-agents.jira-setup           # Configure Atlassian API token + MCP tools
-/redhat-agents.process-interview    # Teach agents your Jira workflow
+/jira-setup               # Configure Atlassian API token + MCP tools
+/process-interview        # Teach agents your Jira workflow
 ```
 
 The process interview generates `local/jira-workflow.md` — a local, gitignored config that all agents read.
@@ -45,22 +69,22 @@ The process interview generates `local/jira-workflow.md` — a local, gitignored
 
 Tactical, Jira-focused agents for day-to-day backlog operations.
 
-**@redhat-agents.process-discoverer** — Workflow Discovery
+**@process-discoverer** — Workflow Discovery
 > Interviews you about your Jira setup and generates the local workflow config. Run this first.
 >
 > Skills: `process-interview`
 
-**@redhat-agents.backlog-curator** — Backlog Health
+**@backlog-curator** — Backlog Health
 > Scans for stale tickets, missing fields, duplicates, and wrong statuses. Prepares grooming agendas. Suggests priority rebalancing when priorities drift.
 >
 > Skills: `backlog-health-check` · `grooming-prep` · `priority-rebalance`
 
-**@redhat-agents.intake-triager** — Incoming Work
+**@intake-triager** — Incoming Work
 > Classifies new tickets (bug vs task vs epic), searches for duplicates, assesses severity and effort, drafts acceptance criteria. Recommends priority and parent epic.
 >
 > Skills: `intake-triage` · `impact-assessment` · `acceptance-criteria-writer`
 
-**@redhat-agents.delivery-tracker** — Progress & Risks
+**@delivery-tracker** — Progress & Risks
 > Tracks epic completion, flags at-risk work, maps dependency chains, generates stakeholder-ready status reports. Read-only — reports and recommends, never modifies tickets.
 >
 > Skills: `epic-health` · `status-report` · `dependency-mapper`
@@ -69,22 +93,22 @@ Tactical, Jira-focused agents for day-to-day backlog operations.
 
 Strategic, outward-facing agents for roadmap, market analysis, and stakeholder communication.
 
-**@redhat-agents.roadmap-strategist** — Roadmap Planning
+**@roadmap-strategist** — Roadmap Planning
 > Reviews roadmap health (overcommitment, stalled epics, timeline conflicts). Helps plan upcoming quarters. Generates roadmap briefs tailored to executives, engineering, or customers.
 >
 > Skills: `roadmap-review` · `quarter-planning` · `roadmap-brief`
 
-**@redhat-agents.requirements-analyst** — Specs & Signals
+**@requirements-analyst** — Specs & Signals
 > Turns unstructured input (conversations, feature requests, support escalations) into structured feature specs. Aggregates customer signals from Jira to surface demand patterns.
 >
 > Skills: `feature-spec-writer` · `customer-signal-aggregator`
 
-**@redhat-agents.market-analyst** — Market Intelligence
+**@market-analyst** — Market Intelligence
 > Structures market problems (segments, pain points, alternatives, opportunity sizing). Maps competitive landscapes. Scores feature opportunities against demand, competition, strategic fit, and feasibility.
 >
 > Skills: `market-problem-definition` · `competitive-landscape` · `opportunity-assessment`
 
-**@redhat-agents.stakeholder-communicator** — Outward Communication
+**@stakeholder-communicator** — Outward Communication
 > Documents product decisions with full context and alternatives. Drafts customer-facing release notes from Jira data. Prepares executive briefs adapted to the audience.
 >
 > Skills: `decision-record` · `release-notes-drafter` · `stakeholder-brief`
@@ -132,22 +156,16 @@ This creates a feedback loop: real-world usage continuously improves the agents.
 ## Repository Structure
 
 ```
-module/                         # Lola-compatible AI context module
-├── AGENTS.md                   # Module overview for AI assistants
-├── mcps.json                   # MCP server configuration
-├── skills/                     # 23 skills (each in <name>/SKILL.md)
-├── agents/                     # 8 agent definitions
-└── commands/                   # Slash commands (jira-setup, process-interview)
-marketplace.yml                 # Self-hosted Lola marketplace definition
-.lola-req                       # Declarative installation example
-local/                          # Your Jira workflow config (gitignored)
+module/
+├── AGENTS.md               # Module overview for AI assistants
+├── mcps.json               # MCP server configuration
+├── skills/                 # 23 skills (each in <name>/SKILL.md)
+├── agents/                 # 8 agent definitions
+└── commands/               # Slash commands (jira-setup, process-interview)
+marketplace.yml             # Lola marketplace definition (optional)
+.lola-req                   # Declarative Lola installation (optional)
+local/                      # Your Jira workflow config (gitignored)
 ```
-
-## Distribution
-
-This module is distributed through [Lola](https://github.com/RedHatProductSecurity/lola) and supports all three installation methods — direct git URL, self-hosted marketplace, and declarative `.lola-req`. No contributions to or approval from the Lola project are required.
-
-Compatible with: **Claude Code** · **Cursor** · **Gemini CLI** · **OpenCode**
 
 ## License
 
