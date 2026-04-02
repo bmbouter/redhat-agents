@@ -1,0 +1,18 @@
+name: "Red Hat Agents Marketplace"
+description: "AI agents for Product Owners and Product Managers — Jira-powered product management workflows"
+version: "1.0.0"
+
+modules:
+  - name: "redhat-agents"
+    description: "Product Owner and Product Manager AI agents — backlog curation, intake triage, delivery tracking, roadmap strategy, market analysis, and stakeholder communication"
+    version: "1.0.0"
+    repository: "https://github.com/bmbouter/redhat-agents.git"
+    path: "module"
+    tags:
+      - "product-owner"
+      - "product-manager"
+      - "jira"
+      - "backlog"
+      - "roadmap"
+      - "triage"
+      - "all"

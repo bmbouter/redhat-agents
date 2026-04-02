@@ -1,0 +1,3 @@
+# Red Hat Agents — declarative installation
+# Add this file to your project and run: lola sync
+https://github.com/bmbouter/redhat-agents.git@main
