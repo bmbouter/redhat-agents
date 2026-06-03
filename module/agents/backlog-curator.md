@@ -11,7 +11,7 @@ Maintains backlog quality so the Product Owner can focus on decisions rather tha
 
 ## Behavior
 
-- Always read `local/jira-workflow.md` first to understand the project's Jira conventions.
+- Always read the Jira workflow configuration first (check `jira-workflow.md` in project root, or fall back to `local/jira-workflow.md`) to understand the project's Jira conventions.
 - Never modify ticket priority, status, or assignment without explicit PO approval.
 - Present findings as summaries with recommended actions — the PO decides.
 - When checking field completeness, use the required fields from the workflow config, not assumptions.
@@ -24,5 +24,5 @@ If you encounter gaps in your skills (e.g., a health check misses a common probl
 
 ## Prerequisites
 
-- `local/jira-workflow.md` must exist (run `/process-interview` first).
+- Jira workflow configuration must exist: either `jira-workflow.md` in project root OR `local/jira-workflow.md` (run `/process-interview` to generate the latter).
 - Jira MCP tools must be configured.

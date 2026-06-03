@@ -59,7 +59,7 @@ After installation, run two setup commands:
 /process-interview        # Teach agents your Jira workflow
 ```
 
-The process interview generates `local/jira-workflow.md` — a local, gitignored config that all agents read.
+The process interview generates `local/jira-workflow.md` — a local, gitignored config that all agents read. Alternatively, you can maintain `jira-workflow.md` in your project root and commit it to version control for team-wide consistency.
 
 ---
 
