@@ -25,6 +25,8 @@ AI agents and skills for Product Owners and Product Managers. All agents interac
 
 All agents share the `suggest-improvement` skill — when they find gaps in their own workflows, they file issues against this repo.
 
-## Local Configuration
+## Workflow Configuration
 
-The `local/` directory (gitignored) stores your personal Jira workflow configuration. Run `/redhat-agents.process-interview` to generate it.
+Agents read your Jira workflow config from `jira-workflow.md` in the project root (preferred) or `local/jira-workflow.md` (gitignored, for personal configs). Run `/redhat-agents.process-interview` to generate it.
+
+See `module/examples/jira-workflow.example.md` for the expected structure and all sections that agents rely on. Do not remove any sections — if a section doesn't apply, keep the heading and write "Not used."
