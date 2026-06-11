@@ -81,7 +81,11 @@ Ask the user if there's anything else about their process that the agents should
 
 ## Output
 
-After the interview, generate `local/jira-workflow.md` in the repo root. Use the structure below, filling in all sections with the user's answers. For any section where the user said "we don't use this," explicitly note that so agents don't guess.
+After the interview, generate the Jira workflow config. Write to `jira-workflow.md` in the project root (preferred) or `local/jira-workflow.md`. Use the structure below — see `module/examples/jira-workflow.example.md` for a fully populated reference.
+
+**If the file already exists:** Read it first. Merge new information into the existing sections — never remove or restructure sections that are already populated. Only add or update specific values. Show the user a diff of what will change before writing.
+
+**If the file does not exist:** Create it fresh using the template below, filling in all sections with the user's answers. For any section where the user said "we don't use this," explicitly note that so agents don't guess.
 
 ```markdown
 # Jira Workflow Configuration
