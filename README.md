@@ -75,9 +75,9 @@ Tactical, Jira-focused agents for day-to-day backlog operations.
 > Skills: `process-interview`
 
 **@backlog-curator** — Backlog Health
-> Scans for stale tickets, missing fields, duplicates, and wrong statuses. Prepares grooming agendas. Suggests priority rebalancing when priorities drift.
+> Scans for stale tickets, missing fields, duplicates, and wrong statuses. Prepares grooming agendas. Records each grooming session to an auditable report. Suggests priority rebalancing when priorities drift.
 >
-> Skills: `backlog-health-check` · `grooming-prep` · `priority-rebalance`
+> Skills: `backlog-health-check` · `grooming-prep` · `grooming-report` · `priority-rebalance`
 
 **@intake-triager** — Incoming Work
 > Classifies new tickets (bug vs task vs epic), searches for duplicates, assesses severity and effort, drafts acceptance criteria. Recommends priority and parent epic.
@@ -124,6 +124,7 @@ Strategic, outward-facing agents for roadmap, market analysis, and stakeholder c
 | **suggest-improvement** | Files issues/PRs against this repo when agents find gaps |
 | **backlog-health-check** | Scans for stale, incomplete, orphaned, or duplicate tickets |
 | **grooming-prep** | Prepares grooming session agendas with readiness assessments |
+| **grooming-report** | Logs grooming actions to an audit trail and renders a per-session Markdown report |
 | **priority-rebalance** | Reviews priority distribution and suggests adjustments |
 | **intake-triage** | Classifies tickets, finds duplicates, recommends fields |
 | **impact-assessment** | Evaluates severity, urgency, and effort with Jira context |
@@ -159,7 +160,7 @@ This creates a feedback loop: real-world usage continuously improves the agents.
 module/
 ├── AGENTS.md               # Module overview for AI assistants
 ├── mcps.json               # MCP server configuration
-├── skills/                 # 23 skills (each in <name>/SKILL.md)
+├── skills/                 # 24 skills (each in <name>/SKILL.md)
 ├── agents/                 # 8 agent definitions
 └── commands/               # Slash commands (jira-setup, process-interview)
 marketplace.yml             # Lola marketplace definition (optional)
