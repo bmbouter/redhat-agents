@@ -62,8 +62,12 @@ while IFS= read -r line; do
             continue
         fi
 
+        # clean: escape pipes and flatten newlines so free-text values
+        # can't break the Markdown table layout.
+        clean='def clean: tostring | gsub("\\|"; "\\|") | gsub("[\\n\\r]+"; " ");'
+
         # Handle issue vs issues vs features (single vs array)
-        issue=$(echo "$line" | jq -r 'if .issues then (.issues | if type == "array" then join(", ") else . end) elif .issue then .issue elif .features then (.features | if type == "array" then join(", ") else . end) else "" end')
+        issue=$(echo "$line" | jq -r "$clean"' (if .issues then (.issues | if type == "array" then join(", ") else . end) elif .issue then .issue elif .features then (.features | if type == "array" then join(", ") else . end) else "" end) | clean')
 
         # Skip entries without issue/issues/features field
         if [[ -z "$issue" ]]; then
@@ -71,15 +75,15 @@ while IFS= read -r line; do
         fi
 
         # Handle changes array or string
-        changes=$(echo "$line" | jq -r 'if .changes then (.changes | if type == "array" then join(", ") else . end) else "-" end')
+        changes=$(echo "$line" | jq -r "$clean"' (if .changes then (.changes | if type == "array" then join(", ") else . end) else "-" end) | clean')
 
         # Combine notes and reason
-        notes=$(echo "$line" | jq -r '.notes // .reason // .summary // "-"')
+        notes=$(echo "$line" | jq -r "$clean"' (.notes // .reason // .summary // "-") | clean')
 
         # If it's a created_feature or created_epic, format differently
         if [[ "$action" == "created_feature" ]] || [[ "$action" == "created_epic" ]]; then
-            summary=$(echo "$line" | jq -r '.summary // "-"')
-            parent=$(echo "$line" | jq -r '.parent // "-"')
+            summary=$(echo "$line" | jq -r "$clean"' (.summary // "-") | clean')
+            parent=$(echo "$line" | jq -r "$clean"' (.parent // "-") | clean')
             echo "| **$issue** | $action | Parent: $parent | $summary |" >> "$OUTPUT"
         else
             echo "| $issue | $action | $changes | $notes |" >> "$OUTPUT"
